@@ -24,6 +24,8 @@ def parse_args():
         help='Supported games: {}'.format(list(SUPPORTED_PAGES.keys())))
     parser.add_argument('--indent', metavar='N', type=int, default=2,
         help='Indent level for JSON output')
+    parser.add_argument('--unicode-escapes', action='store_true',
+        help='Escapes non-ASCII strings with unicode escapes')
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -40,7 +42,7 @@ if __name__ == "__main__":
     courses = tables_to_courses(tables)
     print(json.dumps(
         courses,
-        ensure_ascii=False,
+        ensure_ascii=args.unicode_escapes,
         indent=args.indent,
         default=lambda x: x.__dict__)
     )
